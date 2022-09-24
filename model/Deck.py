@@ -40,3 +40,6 @@ class Deck:
 
     def lastHit(self):
         return self.deck.pop(self.deck.len)
+
+    def __str__(self) -> str:
+        return super().__str__(self.deck)
