@@ -2,17 +2,18 @@ from model import VisibilityCard
 from model import Card
 import random
 
+
 class Deck:
 
-    def __init__(self, * args):
+    def __init__(self, *args):
         self.deck = []
-        if args[0] != None:
+        if args[0] is not None:
             if isinstance(args[0], Deck):
                 self.deck = args[0]
 
     def addAllCard(self):
-        for i in range(0,5):
-            self.deck.append(Card.Card(-2,VisibilityCard.VisibilityCard.hidden))
+        for i in range(0, 5):
+            self.deck.append(Card.Card(-2, VisibilityCard.VisibilityCard.hidden))
         for i in range(0, 15):
             self.deck.append(Card.Card(0, VisibilityCard.VisibilityCard.hidden))
         for i in range(0, 10):
@@ -29,12 +30,12 @@ class Deck:
         return tmp
 
     def isEmpty(self):
-        return self.deck.len()== 0
+        return self.deck.len() == 0
 
-    def remove(self,card:Card.Card):
+    def remove(self, card: Card.Card):
         self.deck.remove(card)
 
-    def addCard(self,card:Card.Card):
+    def addCard(self, card: Card.Card):
         self.deck.append(card)
 
     def lastHit(self):

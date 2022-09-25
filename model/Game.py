@@ -6,7 +6,7 @@ from model import Player
 from model import LevelStatus
 
 
-class Game():
+class Game:
     def __init__(self) -> None:
         self.deck = Deck.Deck()
         self.deck.addAllCard()
@@ -19,7 +19,7 @@ class Game():
         self.clickDiscard = False
         self.discardToDeck = False
         self.deckBlock = False
-        self.init()
+        self.initGame()
 
     def isDeckBlock(self):
         return self.deckBlock
@@ -32,8 +32,7 @@ class Game():
         self.playerTwo.scorePlayer()
 
     def lastDiscardCard(self):
-        last: int = len(self.discardDeck) - 1
-        return self.discardDeck.lastHit(last)
+        return self.discardDeck.lastHit()
 
     def deckHit(self):
         return self.deck.hit()
@@ -100,16 +99,16 @@ class Game():
             if card.isHidden():
                 card.setVisibility(VisibilityCard.VisibilityCard.nothide)
 
-    def registerObserver(self,observer):
+    def registerObserver(self, observer):
         self.observers.append(observer)
 
-    def notifyObserver(self,* args):
-        if args[0] != None:
+    def notifyObserver(self, *args):
+        if args[0] is not None:
             self.update(args[0])
         else:
             self.update(args[0])
 
-    def deckEmpty(self)->bool:
+    def deckEmpty(self) -> bool:
         return self.deck.isEmpty()
 
     def initGame(self):
@@ -120,22 +119,74 @@ class Game():
         self.whoStart()
 
     def whoStart(self):
-        self.playerTwo.beats(self.playerOne)
-
-    def showCard(self, player, nbCard):
-        pass
-
-    def playerTour(self):
-        pass
-
-    def endPlayer(self, playerOne):
-        pass
-
-    def winner(self):
-        pass
-
-    def update(self, param):
-        pass
+        if self.playerTwo.beats(self.playerOne):
+            self.playerTour()
 
     def startShuffle(self):
+        self.deck.shuffle()
+
+    def giveCards(self):
+        for i in range(0, 12):
+            self.playerOne.adCard(self.giveOneCard())
+            self.playerTwo.adCard(self.giveOneCard())
+
+    def giveOneCard(self) -> Card.Card:
+        return self.deck.hit()
+
+    def hitInitCard(self):
+        self.playerOne.hitCardPlayer()
+        self.playerTwo.hitCardPlayer()
+
+    def giveDiscardCard(self):
+        card: Card.Card = self.giveOneCard()
+        self.discardDeck.addCard(card)
+        self.setDiscardDeck(self.discardDeck)
+
+    def setDiscardDeck(self, discardDeck: Deck.Deck):
+        self.discardDeck = discardDeck
+
+    def getDeck(self) -> Deck.Deck:
+        return self.deck
+
+    def getPlayerOne(self) -> Player.Player:
+        return self.playerOne
+
+    def getPlayerTwo(self) -> Player.Player:
+        return self.playerTwo
+
+    def playerTour(self):
+        if self.tourPlayer == NextPlayer.NextPlayer.PLAYERONE:
+            self.tourPlayer = NextPlayer.NextPlayer.PLAYERTWO
+        elif self.tourPlayer == NextPlayer.NextPlayer.PLAYERTWO:
+            self.tourPlayer = NextPlayer.NextPlayer.PLAYERONE
+
+    def showCard(self, player, nbCard):
+        player.setCardVisibility(nbCard)
+
+    def getDiscardToDeck(self) -> bool:
+        return self.discardToDeck
+
+    def setDiscardToDeck(self, discardToDeck: bool):
+        self.discardToDeck = discardToDeck
+
+    def endPlayer(self, players):
+        for i in range(0, len(players.getHandPlayer())):
+            if players.getCard(i).isHidden():
+                return False
+        return True
+
+    def winner(self) -> LevelStatus.LevelStatus:
+        if self.playerOne.beats(self.playerTwo):
+            return LevelStatus.LevelStatus.FAIL
+        if self.playerTwo.beats(self.playerOne):
+            return LevelStatus.LevelStatus.WIN
+        return LevelStatus.LevelStatus.IN_PROGRESS
+
+    def __eq__(self, o: object) -> bool:
+        return super().__eq__(o)
+
+    def __hash__(self) -> int:
+        return super().__hash__()
+
+    def update(self, param):
         pass

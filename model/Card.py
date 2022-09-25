@@ -1,24 +1,27 @@
+import string
+
 from model import VisibilityCard
+
 
 class Card:
 
-    def __init__(self,* args):
+    def __init__(self, *args):
         if isinstance(args[0], int):
-            self.value = args[0];
-            self.visibility = args[1];
+            self.value = args[0]
+            self.visibility = args[1]
         elif isinstance(args[0], Card):
-            tmp:Card = args[0];
-            self.value = tmp.getValue();
-            self.visibility = tmp.getVisibility();
+            tmp: Card = args[0]
+            self.value = tmp.getValue()
+            self.visibility = tmp.getVisibility()
 
     def getValue(self) -> int:
-        return self.value;
+        return self.value
 
     def getVisibility(self) -> VisibilityCard:
-        return self.visibility;
+        return self.visibility
 
-    def setVisibility(self,visibility:VisibilityCard):
-        self.visibility= visibility;
+    def setVisibility(self, visibility: VisibilityCard):
+        self.visibility = visibility
 
     def isHidden(self) -> bool:
         return self.getVisibility() == 0
@@ -27,11 +30,6 @@ class Card:
         return super().__eq__(o)
 
     def __str__(self) -> str:
-        mot:string
-        mot = "{ " +str(self.value) +","+ str(self.visibility.name)+"}"
+        mot: string
+        mot = "{ " + str(self.value) + "," + str(self.visibility.name) + "}"
         return mot
-
-
-
-
-
