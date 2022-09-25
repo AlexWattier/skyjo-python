@@ -10,8 +10,7 @@ class Deck:
             if isinstance(args[0], Deck):
                 self.deck = args[0]
 
-    def addAllCard(self:list):
-
+    def addAllCard(self):
         for i in range(0,5):
             self.deck.append(Card.Card(-2,VisibilityCard.VisibilityCard.hidden))
         for i in range(0, 15):
@@ -25,7 +24,7 @@ class Deck:
         random.shuffle(self.deck)
 
     def hit(self):
-        tmp: Card
+        tmp: Card.Card
         tmp = self.deck.pop(0)
         return tmp
 
