@@ -1,10 +1,11 @@
-from model import VisibilityCard
-
-from model import Card
+from model.VisibilityCard import VisibilityCard
+from model.Card import Card
 import random
 
 
 class Player:
+    scorePlayer: int
+    Player = None
 
     def __init__(self):
         self.handPlayer = []
@@ -13,23 +14,23 @@ class Player:
     def getScorePlayer(self) -> int:
         return self.scorePlayer
 
-    def getHandPlayer(self):
+    def getHandPlayer(self) -> list:
         return self.handPlayer
 
-    def adCard(self, card: Card.Card):
+    def adCard(self, card: Card):
         self.handPlayer.append(card)
 
     def scorePlayer(self):
         scorePlayer: int = 0
         handTemp = self.handPlayer.copy()
         for _ in handTemp:
-            cardTmp: Card.Card = handTemp.pop(0)
-            if cardTmp.getVisibility() == VisibilityCard.VisibilityCard.nothide:
+            cardTmp: Card = handTemp.pop(0)
+            if cardTmp.getVisibility() == VisibilityCard.nothide:
                 scorePlayer = scorePlayer + cardTmp.getValue()
 
         self.scorePlayer = scorePlayer
 
-    def getCard(self, index: int):
+    def getCard(self, index: int) -> Card:
         return self.handPlayer[index]
 
     def hitCardPlayer(self):
@@ -41,7 +42,7 @@ class Player:
             self.setCardVisibility(randomNum.pop())
 
     def setCardVisibility(self, nbCard: int):
-        self.getCard(nbCard).setVisibility(VisibilityCard.VisibilityCard.nothide)
+        self.getCard(nbCard).setVisibility(VisibilityCard.nothide)
 
     def beats(self, player) -> bool:
         return self.scorePlayer > player.getScorePlayer()

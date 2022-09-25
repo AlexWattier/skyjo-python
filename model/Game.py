@@ -1,20 +1,20 @@
-from model import Deck
-from model import Card
-from model import VisibilityCard
-from model import NextPlayer
-from model import Player
-from model import LevelStatus
+from model.Deck import Deck
+from model.Card import Card
+from model.VisibilityCard import VisibilityCard
+from model.NextPlayer import NextPlayer
+from model.Player import Player
+from model.LevelStatus import LevelStatus
 
 
 class Game:
     def __init__(self) -> None:
-        self.deck = Deck.Deck()
+        self.deck = Deck()
         self.deck.addAllCard()
-        self.discardDeck = Deck.Deck()
-        self.playerOne = Player.Player()
-        self.playerTwo = Player.Player()
+        self.discardDeck = Deck()
+        self.playerOne = Player()
+        self.playerTwo = Player()
         self.observers = []
-        self.tourPlayer = NextPlayer.NextPlayer.PLAYERONE
+        self.tourPlayer = NextPlayer.PLAYERONE
         self.clickDeck = False
         self.clickDiscard = False
         self.discardToDeck = False
@@ -45,14 +45,14 @@ class Game:
 
     def changeCard(self, player, nbCard):
         if self.clickDeck:
-            cardTemp: Card.Card = self.deck.hit()
+            cardTemp: Card = self.deck.hit()
             self.showCard(player, nbCard)
             self.discardDeck.addCard(player.getCard(nbCard))
             player.getHandPlayer().insert(nbCard, cardTemp)
             self.showCard(player, nbCard)
             self.clickDeck = False
         elif self.clickDiscard:
-            cardTemp: Card.Card = self.discardDeck.lastHit()
+            cardTemp: Card = self.discardDeck.lastHit()
             self.showCard(player, nbCard)
             self.discardDeck.addCard(player.getCard(nbCard))
             player.getHandPlayer().insert(nbCard, cardTemp)
@@ -74,7 +74,7 @@ class Game:
 
     def deckToDiscard(self):
         if self.clickDeck:
-            cardTemp: Card.Card = self.deck.hit()
+            cardTemp: Card = self.deck.hit()
             self.discardDeck.addCard(cardTemp)
             self.clickDeck = False
             self.clickDiscard = False
@@ -91,13 +91,13 @@ class Game:
             self.returnAllCard(self.playerTwo)
             self.refreshScore()
             return self.winner()
-        return LevelStatus.LevelStatus.IN_PROGRESS
+        return LevelStatus.IN_PROGRESS
 
     def returnAllCard(self, player):
         for i in range(0, len(player.getHandPlayer())):
-            card: Card.Card = player.getCard(i)
+            card: Card = player.getCard(i)
             if card.isHidden():
-                card.setVisibility(VisibilityCard.VisibilityCard.nothide)
+                card.setVisibility(VisibilityCard.nothide)
 
     def registerObserver(self, observer):
         self.observers.append(observer)
@@ -130,7 +130,7 @@ class Game:
             self.playerOne.adCard(self.giveOneCard())
             self.playerTwo.adCard(self.giveOneCard())
 
-    def giveOneCard(self) -> Card.Card:
+    def giveOneCard(self) -> Card:
         return self.deck.hit()
 
     def hitInitCard(self):
@@ -138,14 +138,14 @@ class Game:
         self.playerTwo.hitCardPlayer()
 
     def giveDiscardCard(self):
-        card: Card.Card = self.giveOneCard()
+        card: Card = self.giveOneCard()
         self.discardDeck.addCard(card)
         self.setDiscardDeck(self.discardDeck)
 
-    def setDiscardDeck(self, discardDeck: Deck.Deck):
+    def setDiscardDeck(self, discardDeck: Deck):
         self.discardDeck = discardDeck
 
-    def getDeck(self) -> Deck.Deck:
+    def getDeck(self) -> Deck:
         return self.deck
 
     def getPlayerOne(self) -> Player.Player:
@@ -155,10 +155,10 @@ class Game:
         return self.playerTwo
 
     def playerTour(self):
-        if self.tourPlayer == NextPlayer.NextPlayer.PLAYERONE:
-            self.tourPlayer = NextPlayer.NextPlayer.PLAYERTWO
-        elif self.tourPlayer == NextPlayer.NextPlayer.PLAYERTWO:
-            self.tourPlayer = NextPlayer.NextPlayer.PLAYERONE
+        if self.tourPlayer == NextPlayer.PLAYERONE:
+            self.tourPlayer = NextPlayer.PLAYERTWO
+        elif self.tourPlayer == NextPlayer.PLAYERTWO:
+            self.tourPlayer = NextPlayer.PLAYERONE
 
     def showCard(self, player, nbCard):
         player.setCardVisibility(nbCard)
@@ -175,12 +175,12 @@ class Game:
                 return False
         return True
 
-    def winner(self) -> LevelStatus.LevelStatus:
+    def winner(self) -> LevelStatus:
         if self.playerOne.beats(self.playerTwo):
-            return LevelStatus.LevelStatus.FAIL
+            return LevelStatus.FAIL
         if self.playerTwo.beats(self.playerOne):
-            return LevelStatus.LevelStatus.WIN
-        return LevelStatus.LevelStatus.IN_PROGRESS
+            return LevelStatus.WIN
+        return LevelStatus.IN_PROGRESS
 
     def __eq__(self, o: object) -> bool:
         return super().__eq__(o)

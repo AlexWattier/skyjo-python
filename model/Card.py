@@ -1,6 +1,6 @@
 import string
 
-from model import VisibilityCard
+from model.VisibilityCard import VisibilityCard
 
 
 class Card:

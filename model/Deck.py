@@ -1,5 +1,5 @@
 from model import VisibilityCard
-from model import Card
+from model.Card import Card
 import random
 
 
@@ -13,32 +13,32 @@ class Deck:
 
     def addAllCard(self):
         for i in range(0, 5):
-            self.deck.append(Card.Card(-2, VisibilityCard.VisibilityCard.hidden))
+            self.deck.append(Card(-2, VisibilityCard.VisibilityCard.hidden))
         for i in range(0, 15):
-            self.deck.append(Card.Card(0, VisibilityCard.VisibilityCard.hidden))
+            self.deck.append(Card(0, VisibilityCard.VisibilityCard.hidden))
         for i in range(0, 10):
-            self.deck.append(Card.Card(-1, VisibilityCard.VisibilityCard.hidden))
+            self.deck.append(Card(-1, VisibilityCard.VisibilityCard.hidden))
             for j in range(1, 13):
-                self.deck.append(Card.Card(j, VisibilityCard.VisibilityCard.hidden))
+                self.deck.append(Card(j, VisibilityCard.VisibilityCard.hidden))
 
     def shuffle(self):
         random.shuffle(self.deck)
 
-    def hit(self):
-        tmp: Card.Card
+    def hit(self) -> Card:
+        tmp: Card
         tmp = self.deck.pop(0)
         return tmp
 
-    def isEmpty(self):
+    def isEmpty(self) -> bool:
         return self.deck.len() == 0
 
-    def remove(self, card: Card.Card):
+    def remove(self, card: Card):
         self.deck.remove(card)
 
-    def addCard(self, card: Card.Card):
+    def addCard(self, card: Card):
         self.deck.append(card)
 
-    def lastHit(self):
+    def lastHit(self) -> Card:
         return self.deck.pop(self.deck.len)
 
     def __str__(self) -> str:
