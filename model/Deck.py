@@ -5,11 +5,10 @@ import random
 
 class Deck:
 
-    def __init__(self, *args):
-        self.deck = []
-        if args[0] is not None:
-            if isinstance(args[0], Deck):
-                self.deck = args[0]
+    def __init__(self, deck):
+        self.deck :list = []
+        if deck is not None:
+            self.deck = deck
 
     def addAllCard(self):
         for i in range(0, 5):

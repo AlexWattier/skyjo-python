@@ -1,13 +1,3 @@
-from model import Card
-from model import VisibilityCard
+from controller.Controller import Controller
 
-hidden = VisibilityCard.VisibilityCard.hidden
-
-card = Card.Card(5, hidden)
-
-
-def print_hi():
-    print(card)
-
-
-print_hi()
+cont:Controller=Controller(1)

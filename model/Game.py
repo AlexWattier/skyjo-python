@@ -8,9 +8,9 @@ from model.LevelStatus import LevelStatus
 
 class Game:
     def __init__(self) -> None:
-        self.deck = Deck()
+        self.deck = Deck(None)
         self.deck.addAllCard()
-        self.discardDeck = Deck()
+        self.discardDeck = Deck(None)
         self.playerOne = Player()
         self.playerTwo = Player()
         self.observers = []
@@ -28,9 +28,9 @@ class Game:
         self.deckBlock = True
 
     def refreshScore(self):
-        self.playerOne.scorePlayer()
-        self.playerTwo.scorePlayer()
-
+        self.playerOne.getscorePlayer()
+        print(self.playerOne.getscorePlayer())
+        self.playerTwo.getscorePlayer()
     def lastDiscardCard(self):
         return self.discardDeck.lastHit()
 
