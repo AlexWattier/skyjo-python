@@ -1,5 +1,3 @@
-import string
-
 from model.VisibilityCard import VisibilityCard
 
 
@@ -30,6 +28,7 @@ class Card:
         return super().__eq__(o)
 
     def __str__(self) -> str:
-        mot: string
-        mot = "{ " + str(self.value) + "," + str(self.visibility.name) + "}"
-        return mot
+        return "{ " + str(self.value) + "," + str(self.visibility.name) + "}"
+
+    def __repr__(self) -> str:
+        return self.__str__()

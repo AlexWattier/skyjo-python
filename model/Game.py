@@ -29,8 +29,8 @@ class Game:
 
     def refreshScore(self):
         self.playerOne.getscorePlayer()
-        print(self.playerOne.getscorePlayer())
         self.playerTwo.getscorePlayer()
+
     def lastDiscardCard(self):
         return self.discardDeck.lastHit()
 

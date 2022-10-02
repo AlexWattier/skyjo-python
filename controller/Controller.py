@@ -73,10 +73,13 @@ class AIPlayerTwo:
 
 
 class Controller:
-    def __init__(self, diff:int) -> None:
+    def __init__(self, diff: int) -> None:
         self.game = Game()
-        print(self.game.playerOne.getHandPlayer().__str__())
+        print(self.game.playerOne.getHandPlayer())
+        print(self.game.playerOne.getScorePlayer())
+
         print(self.game.playerTwo.getHandPlayer())
+        print(self.game.playerTwo.getScorePlayer())
 
         self.difficulte: int = diff
         self.movePlayer = AIPlayerTwo()

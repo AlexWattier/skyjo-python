@@ -1,6 +1,6 @@
-from model.VisibilityCard import VisibilityCard
-from model.Card import Card
 import random
+from model.Card import Card
+from model.VisibilityCard import VisibilityCard
 
 
 class Player:
@@ -14,20 +14,19 @@ class Player:
     def getScorePlayer(self) -> int:
         return self.scorePlayer
 
-    def getHandPlayer(self) -> list:
+    def getHandPlayer(self):
         return self.handPlayer
 
     def adCard(self, card: Card):
         self.handPlayer.append(card)
 
-    def scorePlayer(self):
+    def getscorePlayer(self):
         scorePlayer: int = 0
         handTemp = self.handPlayer.copy()
-        for _ in handTemp:
-            cardTmp: Card = handTemp.pop(0)
-            if cardTmp.getVisibility() == VisibilityCard.nothide:
+        for _ in range(0, 12):
+            cardTmp: Card = handTemp.pop()
+            if cardTmp.getVisibility() != VisibilityCard.hidden:
                 scorePlayer = scorePlayer + cardTmp.getValue()
-
         self.scorePlayer = scorePlayer
 
     def getCard(self, index: int) -> Card:
@@ -52,3 +51,6 @@ class Player:
 
     def __hash__(self) -> int:
         return super().__hash__()
+
+    def __str__(self) -> str:
+        return self.getHandPlayer().__str__()

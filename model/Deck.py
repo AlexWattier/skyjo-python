@@ -6,7 +6,7 @@ import random
 class Deck:
 
     def __init__(self, deck):
-        self.deck :list = []
+        self.deck: list = []
         if deck is not None:
             self.deck = deck
 
@@ -41,4 +41,4 @@ class Deck:
         return self.deck.pop(self.deck.len)
 
     def __str__(self) -> str:
-        return super().__str__(self.deck)
+        return "{deck=" + self.deck.__repr__() + "}"
